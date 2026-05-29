@@ -8,3 +8,6 @@ dist-ssr
 .vscode
 .idea
 *.log
+test-presentation.html
+test-export.cjs
+src-tauri/target
