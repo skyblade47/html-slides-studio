@@ -1,37 +1,21 @@
 import { useEditorStore } from '../../stores/editorStore';
-import { templates, getTemplateById, generateHtml } from '../../services/templates';
+import { templates, generateHtml } from '../../services/templates';
 import { Check } from 'lucide-react';
 
 export default function TemplateSelect() {
   const { selectedTemplateId, setSelectedTemplateId, setGeneratedHtml, setIsGenerating, topic, outline } =
     useEditorStore();
 
-  const handleSelectTemplate = async (templateId: string) => {
+  const handleSelectTemplate = (templateId: string) => {
     setSelectedTemplateId(templateId);
     setIsGenerating(true);
-
-    try {
-      const response = await fetch('/api/generate-slides', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          templateId,
-          outline,
-          topic,
-        }),
-      });
-
-      if (!response.ok) throw new Error('生成失败');
-
-      const data = await response.json();
-      setGeneratedHtml(data.html);
-    } catch (error) {
-      console.error('生成失败，使用默认模板:', error);
+    
+    // 直接使用本地生成，不依赖API
+    setTimeout(() => {
       const html = generateHtml(templateId, outline, topic);
       setGeneratedHtml(html);
-    } finally {
       setIsGenerating(false);
-    }
+    }, 500);
   };
 
   return (
@@ -55,7 +39,7 @@ export default function TemplateSelect() {
             )}
             <div
               className="h-32 rounded-lg mb-3 flex items-center justify-center text-white text-sm font-medium"
-              style={{ background: template.cssVariables.primaryColor }}
+              style={{ background: '#1e3a8a' }}
             >
               模板预览
             </div>

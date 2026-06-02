@@ -19,8 +19,8 @@ export interface Template {
   id: string;
   name: string;
   description: string;
-  preview: string;
-  cssVariables: TemplateCSS;
+  preview?: string;
+  cssVariables?: TemplateCSS;
 }
 
 export interface TemplateCSS {
@@ -38,4 +38,44 @@ export interface SlideData {
   layout: 'title' | 'content' | 'split' | 'full';
 }
 
-export type EditorStep = 'topic' | 'outline' | 'template' | 'preview';
+export type EditorStep = 'topic' | 'outline' | 'template' | 'animation' | 'preview';
+
+export interface AnimationConfig {
+  id: string;
+  name: string;
+  type: 'entrance' | 'exit' | 'continuous';
+  className: string;
+  duration: 'fast' | 'normal' | 'slow';
+  delay: number;
+  repeat: number | 'infinite';
+  easing: string;
+}
+
+export interface ElementAnimation {
+  elementId: string;
+  animationId: string;
+  order: number;
+}
+
+export interface SlideElement {
+  id: string;
+  type: 'title' | 'subtitle' | 'text' | 'card' | 'image' | 'chart';
+  content: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+  animations: ElementAnimation[];
+}
+
+export interface SlideConfig {
+  id: string;
+  title: string;
+  layout: 'title' | 'content' | 'split' | 'full';
+  elements: SlideElement[];
+}
+
+export interface AnimationPreset {
+  id: string;
+  name: string;
+  description: string;
+  animations: AnimationConfig[];
+}

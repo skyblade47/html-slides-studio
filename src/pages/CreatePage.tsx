@@ -4,6 +4,7 @@ import { useEditorStore } from '../stores/editorStore';
 import TopicInput from '../components/Editor/TopicInput';
 import OutlineEditor from '../components/Editor/OutlineEditor';
 import TemplateSelect from '../components/Editor/TemplateSelect';
+import AnimationEditor from '../components/Editor/AnimationEditor';
 import SlidePreview from '../components/Preview/SlidePreview';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 
@@ -17,6 +18,7 @@ export default function CreatePage() {
     { key: 'topic', label: '输入主题' },
     { key: 'outline', label: '调整大纲' },
     { key: 'template', label: '选择模板' },
+    { key: 'animation', label: '动画设置' },
     { key: 'preview', label: '预览生成' },
   ];
 
@@ -46,6 +48,8 @@ export default function CreatePage() {
         return outline.length > 0;
       case 'template':
         return true;
+      case 'animation':
+        return true;
       case 'preview':
         return generatedHtml.length > 0;
       default:
@@ -54,7 +58,7 @@ export default function CreatePage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">创建新演示</h2>
         <div className="flex items-center justify-between">
@@ -88,10 +92,11 @@ export default function CreatePage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-8 min-h-[400px]">
+      <div className="bg-white rounded-xl border border-gray-200 p-6 min-h-[550px]">
         {currentStep === 'topic' && <TopicInput />}
         {currentStep === 'outline' && <OutlineEditor />}
         {currentStep === 'template' && <TemplateSelect />}
+        {currentStep === 'animation' && <AnimationEditor />}
         {currentStep === 'preview' && <SlidePreview />}
       </div>
 
